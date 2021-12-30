@@ -1,6 +1,6 @@
-# Sample RudderStack User Transformations
+# Sample RudderStack Transformations
 
-[RudderStack User Transformations](https://rudderstack.com/product/transformations/) give you the ability to code custom JavaScript functions to implement specific use-cases on your event data. This repository contains some useful transformation templates that you can use to create your own user transformations. For more information on RudderStack Transformations, check out the [documentation](https://rudderstack.com/docs/transformations/).
+[RudderStack Transformations](https://rudderstack.com/product/transformations/) give you the ability to code custom JavaScript functions to implement specific use-cases on your event data. This repository contains some useful transformation templates that you can use to create your own user transformations. For more information on RudderStack Transformations, check out the [documentation](https://rudderstack.com/docs/transformations/).
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@
 
 ## Getting Started
 
-The sample user transformations included in this repository can be added via the RudderStack dashboard.
+The sample transformations included in this repository can be added via the RudderStack dashboard.
 
 Adding a new user-defined transformation function is quite simple:
 
@@ -28,7 +28,7 @@ Adding a new user-defined transformation function is quite simple:
 2. Click the [Transformations](https://app.rudderstack.com/transformations) link.
 3. Click the [CREATE NEW](https://app.rudderstack.com/transformations/add) button, assign a name to the transformation, and add the transformation code within the `transformEvent` function.
 
-For detailed steps on adding a new user transformation, check out the [documentation](https://rudderstack.com/docs/transformations/#adding-a-transformation).
+For detailed steps on adding a new transformation, check out the [documentation](https://rudderstack.com/docs/transformations/#adding-a-transformation).
 
 ## Filtering
 
