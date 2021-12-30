@@ -6,13 +6,13 @@
 
 - [Getting Started](#getting-started)
 - [Filtering](#filtering)
-  - [Blacklist by Event Name](#blacklist-by-event-name)
-  - [Whitelist by Email Domain](#whitelist-by-email-domain)
+  - [Blacklist Event Names](#blacklist-event-names)
+  - [Whitelist Email Domains](#whitelist-email-domains)
 - [Enrichment](#enrichment)
   - [Geolocation Data](#geolocation-data)
-  - [Company Data](#company-data)
+  - [User Data](#user-data)
+  - [Browser Data](#browser-data)
   - [Dynamic Header](#dynamic-header)
-  - [User Agent](#user-agent)
 - [Masking](#masking)
   - [Personally Identifiable Information](#personally-identifiable-information)
 - [Cleaning](#cleaning)
@@ -32,7 +32,7 @@ For detailed steps on adding a new user transformation, check out the [documenta
 
 ## Filtering
 
-### Blacklist by Event Name
+### Blacklist Event Names
 
 1. Drop event if blacklist includes event name
 2. Return event otherwise
@@ -46,7 +46,7 @@ export function transformEvent(event, metadata) {
 }
 ```
 
-### Whitelist by Email Domain
+### Whitelist Email Domains
 
 1. Return event if whitelist includes email domain
 2. Drop event otherwise
@@ -79,9 +79,9 @@ export async function transformEvent(event, metadata) {
 }
 ```
 
-### Company Data
+### User Data
 
-1. Get company data from external Clearbit API
+1. Get user data from external Clearbit API
 2. Add data to event's traits
 3. Return event
 
@@ -100,25 +100,10 @@ export async function transformEvent(event) {
 }
 ```
 
-### Dynamic Header
-
-1. Add dynamic header key(s) and value(s) to event
-2. Return event
-
-```javascript
-export function transformEvent(event, metadata) {
-    event.header = {
-        dynamic_header_1: "dynamic_header_1_value",
-        dynamic_header_2: "dynamic_header_2_value"
-    };
-    return event;
-}
-```
-
-### User Agent
+### Browser Data
 
 1. Import `UAParser` function from [user agent parser](libraries/userAgentParser.js) library
-2. Add browser information to event if present in user agent
+2. Add browser data to event if present in user agent
 3. Return event
 
 ```javascript
@@ -131,6 +116,21 @@ export function transformEvent(event, metadata) {
         const browser = parser.setUA(userAgent).getBrowser();
         if (browser.name) event.context.browser = browser;
     }
+    return event;
+}
+```
+
+### Dynamic Header
+
+1. Add dynamic header key(s) and value(s) to event
+2. Return event
+
+```javascript
+export function transformEvent(event, metadata) {
+    event.header = {
+        dynamic_header_1: "dynamic_header_1_value",
+        dynamic_header_2: "dynamic_header_2_value"
+    };
     return event;
 }
 ```
