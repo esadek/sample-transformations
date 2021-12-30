@@ -162,4 +162,4 @@ export function transformEvent(event) {
 
 ## License
 
-[MIT](https://github.com/rudderlabs/sample-user-transformers/blob/master/LICENSE.md)
+[MIT](LICENSE)
