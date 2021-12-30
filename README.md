@@ -72,7 +72,7 @@ export function transformEvent(event, metadata) {
 
 export async function transformEvent(event, metadata) {
     if (event.request_ip) {
-        const res = await fetch('https://api.ip2location.com/v2/?ip='+event.request_ip.trim()+'&addon=<required addon e.g.geotargeting>&lang=en&key=<IP2Location_API_Key>&package=<package as required e.g. WS10>');
+        const res = await fetch('https://api.ip2location.com/v2/?ip=' + event.request_ip.trim() + '&addon=<required addon e.g.geotargeting>&lang=en&key=<IP2Location_API_Key>&package=<package as required e.g. WS10>');
         event.geolocation = res;
     }
     return event;
@@ -82,14 +82,18 @@ export async function transformEvent(event, metadata) {
 ### Company Data
 
 1. Get company data from external Clearbit API
-2. Add company data to event's traits
+2. Add data to event's traits
 3. Return event
 
 ```javascript
 export async function transformEvent(event) {
-    const email = event.context?.traits.email;
+    const email = event.context?.traits?.email;
     if (email) {
-        const res = await fetch('https://person.clearbit.com/v2/combined/find?email='+email, {headers: {'Authorization': 'Bearer <your_clearbit_secure_key'}});
+        const res = await fetch('https://person.clearbit.com/v2/combined/find?email=' + email, {
+            headers: {
+                'Authorization': 'Bearer <your_clearbit_secure_key'
+            }
+        });
         event.context.traits.enrichmentInfo = res;
     }
     return event;
@@ -113,7 +117,7 @@ export function transformEvent(event, metadata) {
 
 ### User Agent
 
-1. Import `UAParser` function from "user agent parser" library
+1. Import `UAParser` function from [user agent parser](libraries/userAgentParser.js) library
 2. Add browser information to event if present in user agent
 3. Return event
 
