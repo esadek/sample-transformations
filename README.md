@@ -1,6 +1,6 @@
 # Sample RudderStack Transformations
 
-[RudderStack Transformations](https://rudderstack.com/product/transformations/) give you the ability to code custom JavaScript functions to implement specific use-cases on your event data. This repository contains some useful transformation templates that you can use to create your own user transformations. For more information on RudderStack Transformations, check out the [documentation](https://rudderstack.com/docs/transformations/).
+[RudderStack Transformations](https://rudderstack.com/product/transformations/) give you the ability to code custom JavaScript functions to implement specific use-cases on your event data. This repository contains some useful transformation templates that you can use to create your own transformations. For more information on RudderStack Transformations, check out the [documentation](https://rudderstack.com/docs/transformations/).
 
 ## Table of Contents
 
@@ -17,6 +17,8 @@
   - [Personally Identifiable Information](#personally-identifiable-information)
 - [Cleaning](#cleaning)
   - [Remove Null Properties](#remove-null-properties)
+- [Miscellaneous](#miscellaneous)
+  - [Source ID](#source-id)
 
 ## Getting Started
 
@@ -155,6 +157,22 @@ export function transformEvent(event) {
                 if (event.properties[key] === null) delete event.properties[key];
             })
         }
+    }
+    return event;
+}
+```
+
+## Miscellaneous
+
+### Source ID
+
+1. Do something if event from specified source
+2. Return event
+
+```javascript
+export function transformEvent(event, metadata) {
+    if (metadata(event).sourceId === "12345") {
+        // Do something
     }
     return event;
 }
