@@ -23,6 +23,7 @@
 - [Miscellaneous](#miscellaneous)
   - [Source ID](#source-id)
   - [Change Event Type](#change-event-type)
+  - [Batch](#batch)
 
 ## Getting Started
 
@@ -252,6 +253,20 @@ export function transformEvent(event) {
         updatedEvent.context = updatedContext;
     }
    return updatedEvent;
+}
+```
+
+### Batch
+
+1. Do something for each event
+2. Return events
+
+```javascript
+export function transformBatch(events, metadata) {
+    events.forEach(event => {
+        // Do something
+    });
+    return events;
 }
 ```
 
