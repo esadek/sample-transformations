@@ -13,8 +13,9 @@
   - [User Data](#user-data)
   - [Browser Data](#browser-data)
   - [Dynamic Header](#dynamic-header)
+  - [Dynamic Path](#dynamic-path)
 - [Masking](#masking)
-  - [Personally Identifiable Information](#personally-identifiable-information)
+  - [Replace PII](#replace-pii)
 - [Cleaning](#cleaning)
   - [Remove Null Properties](#remove-null-properties)
 - [Miscellaneous](#miscellaneous)
@@ -72,7 +73,6 @@ export function transformEvent(event, metadata) {
 3. Return event
 
 ```javascript
-
 export async function transformEvent(event, metadata) {
     if (event.request_ip) {
         const res = await fetch("https://api.ip2location.com/v2/?ip=" + event.request_ip.trim() + "&addon=<required addon e.g.geotargeting>&lang=en&key=<IP2Location_API_Key>&package=<package as required e.g. WS10>");
@@ -125,7 +125,7 @@ export function transformEvent(event, metadata) {
 
 ### Dynamic Header
 
-1. Add dynamic header key(s) and value(s) to event
+1. Add header key(s) and value(s) to event
 2. Return event
 
 ```javascript
@@ -138,9 +138,41 @@ export function transformEvent(event, metadata) {
 }
 ```
 
+### Dynamic Path
+
+1. Add dynamic path to event's endpoint base URL
+2. Return event
+
+```javascript
+export function transformEvent(event, metadata) {
+  event.appendPath = `/path/${var1}/search?param=${var2}`;
+  return event;
+}
+```
+
 ## Masking
 
-### Personally Identifiable Information
+### Replace PII
+
+1. Import `walk` function from [fuzzy find replace](libraries/fuzzyFindReplace.js) library
+2. Replace values where keys approximately match target keys
+3. Return event
+
+```javascript
+import { walk } from "fuzzyFindReplace";
+
+export function transformEvent(event, metadata) {
+    const targetKeys = [
+        "SSN",
+        "Social Security Number",
+        "social security no.",
+        "social sec num",
+        "ssnum"
+    ];
+    walk(event, targetKeys, "XXX-XX-XXXX");
+    return event;
+}
+```
 
 ## Cleaning
 
@@ -181,6 +213,9 @@ export function transformEvent(event, metadata) {
 
 ### Change Event Type
 
+1. Change event from `track` to `identify` if conditions are met
+2. Return event
+
 ```javascript
 export function transformEvent(event) {
     let updatedEvent = event;
@@ -188,7 +223,7 @@ export function transformEvent(event) {
         event.type === "track" && 
         event.event === "ide-authentication" && 
         event.properties?.email && 
-        event.properties.email != ""
+        event.properties.email !== ""
     ) {
         updatedEvent.type = "identify";
         let updatedContext = event.context || {}; 
