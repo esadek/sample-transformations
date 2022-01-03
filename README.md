@@ -67,9 +67,9 @@ export function transformEvent(event, metadata) {
 }
 ```
 
-# Sampling
+## Sampling
 
-## User Based
+### User Based
 
 1. Import `cyrb53` function from [hash](libraries/hash.js) library 
 2. Drop event if remainder of hashed user ID less than 5
