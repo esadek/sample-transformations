@@ -8,6 +8,8 @@
 - [Filtering](#filtering)
   - [Blacklist Event Names](#blacklist-event-names)
   - [Whitelist Email Domains](#whitelist-email-domains)
+- [Sampling](#sampling)
+  - [User Based](#user-based)
 - [Enrichment](#enrichment)
   - [Geolocation Data](#geolocation-data)
   - [User Data](#user-data)
@@ -61,6 +63,23 @@ export function transformEvent(event, metadata) {
     const email = event.context?.traits?.email;
     if (email && domains.includes(email.split("@").pop())) return event;
     return;
+}
+```
+
+# Sampling
+
+## User Based
+
+1. Drop event if remainder of hashed user ID less than 5
+2. Return event otherwise
+
+```javascript
+import { cyrb53 } from "hash";
+
+export function transformEvent(event, metadata) {
+    const userId = event.context?.traits?.userId;
+    if (userId && cyrb53(userId) % 10 < 5) return;
+    return event;
 }
 ```
 
@@ -125,7 +144,7 @@ export function transformEvent(event, metadata) {
 
 ### Dynamic Header
 
-1. Add header key(s) and value(s) to event
+1. Add dynamnic header to event
 2. Return event
 
 ```javascript
