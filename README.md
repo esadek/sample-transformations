@@ -70,8 +70,9 @@ export function transformEvent(event, metadata) {
 
 ## User Based
 
-1. Drop event if remainder of hashed user ID less than 5
-2. Return event otherwise
+1. Import `cyrb53` function from [hash](libraries/hash.js) library 
+2. Drop event if remainder of hashed user ID less than 5
+3. Return event otherwise
 
 ```javascript
 import { cyrb53 } from "hash";
