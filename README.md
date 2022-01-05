@@ -47,7 +47,7 @@ Adding a new transformation or library is quite simple:
 
 3. Click the [CREATE NEW](https://app.rudderstack.com/libraries/add) button.
 4. Assign a name to the library.
-5. Add the library.
+5. Add the library code.
 6. Click the Save button.
 
 ## Filtering
