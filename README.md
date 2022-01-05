@@ -27,13 +27,12 @@
 
 ## Getting Started
 
-The sample transformations and libraries included in this repository can be added via the [RudderStack dashboard](https://app.rudderstack.com/).
+The sample transformations and libraries included in this repository can be added via the [RudderStack dashboard](https://app.rudderstack.com/):
 
 1. Click the [Transformations](https://app.rudderstack.com/transformations) button.
-2. Click the CREATE NEW button.
-3. Add a name to the transformation or library.
-4. Add the transformation or library code.
-5. Click the Save button.
+2. Click a CREATE NEW button.
+3. Add a name and code to the transformation or library.
+4. Click the Save button.
 
 For detailed steps on adding a new transformation or library, check out the [documentation](https://rudderstack.com/docs/transformations/).
 
