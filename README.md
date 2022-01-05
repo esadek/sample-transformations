@@ -5,6 +5,8 @@
 ## Table of Contents
 
 - [Getting Started](#getting-started)
+  - [Transformations](#transformations)
+  - [Libraries](#libraries)
 - [Filtering](#filtering)
   - [Blacklist Event Names](#blacklist-event-names)
   - [Whitelist Email Domains](#whitelist-email-domains)
@@ -27,15 +29,26 @@
 
 ## Getting Started
 
-The sample transformations included in this repository can be added via the RudderStack dashboard.
+The sample transformations and libraries included in this repository can be added via the RudderStack dashboard.
 
-Adding a new user-defined transformation function is quite simple:
+Adding a new transformation or library is quite simple:
 
 1. Log into the [RudderStack dashboard](https://app.rudderstack.com/).
 2. Click the [Transformations](https://app.rudderstack.com/transformations) link.
-3. Click the [CREATE NEW](https://app.rudderstack.com/transformations/add) button, assign a name to the transformation, and add the transformation code within the `transformEvent` function.
 
-For detailed steps on adding a new transformation, check out the [documentation](https://rudderstack.com/docs/transformations/#adding-a-transformation).
+### Transformations
+
+3. Click the [CREATE NEW](https://app.rudderstack.com/transformations/add) button.
+4. Assign a name to the transformation.
+5. Add the transformation code within the `transformEvent` function.
+6. Click the Save button.
+
+### Libraries
+
+3. Click the [CREATE NEW](https://app.rudderstack.com/libraries/add) button.
+4. Assign a name to the library.
+5. Add the library.
+6. Click the Save button.
 
 ## Filtering
 
