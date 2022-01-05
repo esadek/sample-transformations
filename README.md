@@ -27,9 +27,7 @@
 
 ## Getting Started
 
-The sample transformations and libraries included in this repository can be added via the RudderStack dashboard.
-
-Adding a new transformation or library is quite simple:
+The sample transformations and libraries included in this repository can be added via the RudderStack dashboard:
 
 1. Log into the [RudderStack dashboard](https://app.rudderstack.com/).
 2. Click the [Transformations](https://app.rudderstack.com/transformations) link.
