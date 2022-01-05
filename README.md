@@ -31,20 +31,12 @@ The sample transformations and libraries included in this repository can be adde
 
 1. Log into the [RudderStack dashboard](https://app.rudderstack.com/).
 2. Click the [Transformations](https://app.rudderstack.com/transformations) link.
-
-**Transformations**
-
-3. Click the [CREATE NEW](https://app.rudderstack.com/transformations/add) button.
-4. Assign a name to the transformation.
-5. Add the transformation code within the `transformEvent` function.
+3. Click the CREATE NEW button.
+4. Assign a name to the transformation or library.
+5. Add the transformation or library code.
 6. Click the Save button.
 
-**Libraries**
-
-3. Click the [CREATE NEW](https://app.rudderstack.com/libraries/add) button.
-4. Assign a name to the library.
-5. Add the library code.
-6. Click the Save button.
+For detailed steps on adding a new transformation or library, check out the [documentation](https://rudderstack.com/docs/transformations/).
 
 ## Filtering
 
