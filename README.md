@@ -166,8 +166,8 @@ export function transformEvent(event, metadata) {
 
 ```javascript
 export function transformEvent(event, metadata) {
-  event.appendPath = `/path/${var1}/search?param=${var2}`;
-  return event;
+    event.appendPath = `/path/${var1}/search?param=${var2}`;
+    return event;
 }
 ```
 
