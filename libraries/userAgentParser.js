@@ -818,7 +818,7 @@ export function UAParser(ua, extensions) {
     };
     this.setUA(_ua);
     return this;
-};
+}
 
 UAParser.VERSION = LIBVERSION;
 UAParser.BROWSER =  enumerize([NAME, VERSION, MAJOR]);
