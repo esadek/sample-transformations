@@ -13,7 +13,7 @@
 - [Enrichment](#enrichment)
   - [Geolocation Data](#geolocation-data)
   - [User Data](#user-data)
-  - [Browser Data](#browser-data)
+  - [User Agent Data](#user-agent-data)
   - [Dynamic Header](#dynamic-header)
   - [Dynamic Path](#dynamic-path)
 - [Masking](#masking)
@@ -27,7 +27,7 @@
 
 ## Getting Started
 
-The sample transformations and libraries included in this repository can be added via the [RudderStack dashboard](https://app.rudderstack.com/):
+The sample [transformations](https://www.rudderstack.com/docs/transformations/) and [libraries](https://www.rudderstack.com/docs/transformations/#libraries) included in this repository can be added via the [RudderStack dashboard](https://app.rudderstack.com/):
 
 1. Click the [Transformations](https://app.rudderstack.com/transformations) button.
 2. Click a CREATE NEW button.
@@ -39,6 +39,8 @@ For detailed steps on adding a new transformation or library, check out the [doc
 ## Filtering
 
 ### Blacklist Event Names
+
+> Filter out event if a property (event name in this example) is included in a blacklist
 
 1. Drop event if blacklist includes event name
 2. Return event otherwise
@@ -71,6 +73,8 @@ export function transformEvent(event, metadata) {
 </details>
 
 ### Whitelist Email Domains
+
+> Filter out event if a property (email domain in this example) is not included in a whitelist
 
 1. Return event if whitelist includes email domain
 2. Drop event otherwise
@@ -105,6 +109,8 @@ export function transformEvent(event, metadata) {
 ## Sampling
 
 ### User Based
+
+> Drop a random sample of events based on a property (user ID in this example)
 
 1. Import `cyrb53` function from [hash](libraries/hash.js) library 
 2. Drop event if remainder of hashed user ID less than 5
@@ -142,13 +148,15 @@ export function transformEvent(event, metadata) {
 
 ### Geolocation Data
 
+> Enrich event with geolocation data using an external API and IP address
+
 1. Fetch geolocation data from external IP2Location API
 2. Add data to event
 3. Return event
 
 ```javascript
 export async function transformEvent(event, metadata) {
-    if (event.context?.ip) {
+    if (event.request_ip) {
         const res = await fetch("https://api.ip2location.com/v2/?ip=" + event.request_ip.trim() + "&addon=<required addon e.g.geotargeting>&lang=en&key=<IP2Location_API_Key>&package=<package as required e.g. WS10>");
         event.context.geolocation = res;
     }
@@ -171,6 +179,8 @@ export async function transformEvent(event, metadata) {
 </details>
 
 ### User Data
+
+> Enrich event with user data using an external API and email address
 
 1. Get user data from external Clearbit API
 2. Add data to event's traits
@@ -205,10 +215,12 @@ export async function transformEvent(event) {
   </table>
 </details>
 
-### Browser Data
+### User Agent Data
+
+> Enrich event with parsed user agent data
 
 1. Import `UAParser` function from [user agent parser](libraries/userAgentParser.js) library
-2. Add browser data to event if present in user agent
+2. Add parsed user agent data
 3. Return event
 
 ```javascript
@@ -218,8 +230,8 @@ export function transformEvent(event, metadata) {
     const userAgent = event.context?.userAgent;
     if (userAgent) {
         const parser = new UAParser();
-        const browser = parser.setUA(userAgent).getBrowser();
-        if (browser.name) event.context.browser = browser;
+        const parsedUserAgent = parser.setUA(userAgent).getResult();
+        event.context.parsedUserAgent = parsedUserAgent;
     }
     return event;
 }
@@ -234,12 +246,14 @@ export function transformEvent(event, metadata) {
     </tr>
     <tr>
       <td valign="top">{<br>&emsp;"context": {<br>&emsp;&emsp;"userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0"<br>&emsp;}<br>}</td>
-      <td>{<br>&emsp;"context": {<br>&emsp;&emsp;"userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0",<br>&emsp;&emsp;"browser": {<br>&emsp;&emsp;&emsp;"name": "Firefox",<br>&emsp;&emsp;&emsp;"version": "98.0",<br>&emsp;&emsp;&emsp;"major": "98"<br>&emsp;&emsp;}<br>&emsp;}<br>}</td>
+      <td>{<br>&emsp;"context": {<br>&emsp;&emsp;"userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0",<br>&emsp;&emsp;"parsedUserAgent": {<br>&emsp;&emsp;&emsp;"ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0",<br>&emsp;&emsp;&emsp;"browser": {<br>&emsp;&emsp;&emsp;&emsp;"name": "Firefox",<br>&emsp;&emsp;&emsp;&emsp;"version": "98.0",<br>&emsp;&emsp;&emsp;&emsp;"major": "98"<br>&emsp;&emsp;&emsp;},<br>&emsp;&emsp;&emsp;"engine": {<br>&emsp;&emsp;&emsp;&emsp;"name": "Gecko",<br>&emsp;&emsp;&emsp;&emsp;"version": "98.0"<br>&emsp;&emsp;&emsp;},<br>&emsp;&emsp;&emsp;"os": {<br>&emsp;&emsp;&emsp;&emsp;"name": "Mac OS",<br>&emsp;&emsp;&emsp;&emsp;"version": "10.15"<br>&emsp;&emsp;&emsp;},<br>&emsp;&emsp;&emsp;"device": {},<br>&emsp;&emsp;&emsp;"cpu": {}<br>&emsp;&emsp;}<br>&emsp;}<br>}</td>
     </tr>
   </table>
 </details>
 
 ### Dynamic Header
+
+> Add a dynamic header to event payload
 
 1. Add dynamnic header to event
 2. Return event
@@ -270,6 +284,8 @@ export function transformEvent(event, metadata) {
 
 ### Dynamic Path
 
+> Dynamically append the event endpoint
+
 1. Add dynamic path to event's endpoint base URL
 2. Return event
 
@@ -298,6 +314,8 @@ export function transformEvent(event, metadata) {
 ## Masking
 
 ### Replace PII
+
+> Fuzzy find and replace PII properties (social security number in this example)
 
 1. Import `walk` function from [fuzzy find replace](libraries/fuzzyFindReplace.js) library
 2. Replace values where keys approximately match target keys
@@ -337,6 +355,8 @@ export function transformEvent(event, metadata) {
 
 ### Remove Null Properties
 
+> Remove all properties with null values
+
 1. Remove properties with null values
 2. Return event
 
@@ -372,6 +392,8 @@ export function transformEvent(event) {
 
 ### Source ID
 
+> Perform action if event is from a specific source
+
 1. Do something if event from specified source
 2. Return event
 
@@ -385,6 +407,8 @@ export function transformEvent(event, metadata) {
 ```
 
 ### Change Event Type
+
+> Change the type of an event (track to identify in this example)
 
 1. Change event from `track` to `identify` if conditions are met
 2. Return event
@@ -423,6 +447,8 @@ export function transformEvent(event) {
 </details>
 
 ### Batch
+
+> Perform action for each event in a batch
 
 1. Do something for each event
 2. Return events
